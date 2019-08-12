@@ -28,7 +28,7 @@ public class EmployeeController
 	}
 	// Filter Employees based on fname Search
 	@GetMapping(value = "/employees/{letter}", produces = {"application/json"})
-	public ResponseEntity<?> getEmpDetails(@PathVariable Character letter)
+	public ResponseEntity<?> getFilteredList(@PathVariable Character letter)
 	{
 		ArrayList<Employee> rtnList  = WebemployeeApplication.ourEmpList.findEmployees(e -> e.getFname().toUpperCase().charAt(0) == Character.toUpperCase(letter));
 		return new ResponseEntity<>(rtnList, HttpStatus.OK);
@@ -36,11 +36,10 @@ public class EmployeeController
 
 	// Get sorted alphabetical Fname Search
 	@GetMapping(value = "/employee/{letter}", produces = {"application/json"})
-	public ResponseEntity<?> getEmpDetails(@PathVariable String letter)
+	public ResponseEntity<?> getSortedFilteredList(@PathVariable Character letter)
 	{
-		Employee rtnEmp  = WebemployeeApplication.ourEmpList.findEmployee(e -> e.getId() == id);
-		return new ResponseEntity<>(, HttpStatus.OK);
+		ArrayList<Employee> rtnList  = WebemployeeApplication.ourEmpList.findEmployees(e -> e.getFname().toUpperCase().charAt(0) == Character.toUpperCase(letter));
+		rtnList.sort((e1, e2) -> ( (int) (e1.getSalary() - e2.getSalary())));
+		return new ResponseEntity<>(rtnList, HttpStatus.OK);
 	}
-
-
 }
