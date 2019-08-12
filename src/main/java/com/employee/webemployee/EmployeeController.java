@@ -42,6 +42,4 @@ public class EmployeeController
 		rtnList.sort((e1, e2) -> ( (int) (e1.getSalary() - e2.getSalary())));
 		return new ResponseEntity<>(rtnList, HttpStatus.OK);
 	}
-
-
 }
